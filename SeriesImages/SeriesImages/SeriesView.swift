@@ -10,6 +10,7 @@ import SwiftUI
 struct SeriesView: View {
     @State var serieTitle: String
     @State var serieImage: String
+    @State var type: String
     var body: some View {
         HStack {
             VStack{
@@ -17,18 +18,26 @@ struct SeriesView: View {
                     Image(serieImage)
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 150, height: 150)
-                        .clipShape(RoundedRectangle(cornerRadius: 50))
+                        .cornerRadius(12)
+                        .frame(width: 250, height: 150)
                 }
                 HStack{
-                    Text(serieTitle)
-                        .multilineTextAlignment(.trailing)
+                    VStack{
+                        Text(type)
+                            .multilineTextAlignment(.leading)
+                        Text(serieTitle)
+                            .multilineTextAlignment(.leading)
+                            .fontWeight(.bold)
+                    }
                 }
             }
+            .padding()
         }
+        .background(.black)
+        .foregroundStyle(.white)
     }
 }
 
 #Preview {
-    SeriesView(serieTitle: "Dinastia Casillas", serieImage: "dinastia_casillas")
+    SeriesView(serieTitle: "Dinastia Casillas", serieImage: "dinastia_casillas", type: "Drama")
 }
