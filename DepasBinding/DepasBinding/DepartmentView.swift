@@ -46,16 +46,19 @@ struct DepartmentView: View {
             Spacer()
             
             Button(action: {
+                department.favorite.toggle()
                 if department.favorite {
-                    alertMessage = "Agregado a favoritos"
-                    showMessage = true
-                
+                    alertMessage = "Departamento \(department.location) se agrego a favoritos."
+                } else {
+                    alertMessage = "Departamento \(department.location) se elimino de favoritos."
                 }
+                showMessage = true
             }){
                 Image(systemName: department.favorite ? "heart.fill": "heart")
                     .font(.title2)
                     .foregroundColor(department.favorite ? .red : .gray)
             }
+            .buttonStyle(.plain)
         }
         
     }

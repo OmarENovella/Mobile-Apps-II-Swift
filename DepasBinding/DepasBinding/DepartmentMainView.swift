@@ -9,11 +9,11 @@ import SwiftUI
 
 struct DepartmentMainView: View {
     @State var departments: [Department] = [
-        Department(location: "CDMX", image: "depa1", cost: "$2,500"),
-        Department(location: "Cancun", image: "depa2", cost: "$3,800"),
-        Department(location: "Guadalajara", image: "depa3", cost: "$2,100"),
-        Department(location: "Monterrey", image: "depa4", cost: "$2,400"),
-        Department(location: "Puebla", image: "depa5", cost: "$1,800"),
+        Department(location: "La Obrera, Tamps.", image: "depa1", cost: "$2,500"),
+        Department(location: "Lomas de Miralta, Tamps.", image: "depa2", cost: "$3,800"),
+        Department(location: "Velamar, Tamps.", image: "depa3", cost: "$2,100"),
+        Department(location: "Santiago, NL.", image: "depa4", cost: "$2,400"),
+        Department(location: "Guadalajara, Jal.", image: "depa5", cost: "$1,800"),
     ]
     @State var reservedDepartment: UUID? = nil
     @State var showAlert: Bool = false
@@ -43,7 +43,7 @@ struct DepartmentMainView: View {
                             }
                         }
                     }
-
+ 
                     Toggle("Marcar todos como favoritos", isOn: Binding(
                         get: {
                             allFav
@@ -57,14 +57,16 @@ struct DepartmentMainView: View {
                     .padding()
                     .background(Color.orange.opacity(0.15))
                     .cornerRadius(12)
-
+ 
                     ForEach(departments.indices, id: \.self) { index in
-                        DepartamentoView(
-                            departamento: $departments[index],
-                            departamentoReservadoId: $reservedDepartment,
-                            mensajeAlerta: $alertMessage,
-                            mostrarAlerta: $showAlert
+                        
+                        DepartmentView(
+                            department: $departments[index],
+                            reservation: $reservedDepartment,
+                            alertMessage: $alertMessage,
+                            showMessage: $showAlert
                         )
+                        
                     }
                 }
                 .padding()
