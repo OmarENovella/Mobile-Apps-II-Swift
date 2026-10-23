@@ -1,18 +1,14 @@
-//
-//  SinopsisView.swift
-//  Navegacion
-//
-//  Created by win603 on 14/09/26.
-//
-
 import SwiftUI
 
 struct SinopsisView: View {
+    @EnvironmentObject var cart: CartModel
     @State var image: ImageResource
     @State var title: String
     @State var anho: String
     @State var duracion: String
     @State var genero: String
+    @State var showAlert: Bool = false
+
     var body: some View {
         VStack{
             Image(image)
@@ -25,10 +21,12 @@ struct SinopsisView: View {
                 Text("\(duracion) min")
                 Spacer()
                 Text(genero)
-                    
             }
             .padding(60)
-            Button(action: {}){
+            Button(action: {
+                cart.agregar(image: image, title: title)
+                showAlert = true
+            }){
                 Text("Comprar Boleto")
             }
             .padding(10)
@@ -36,17 +34,28 @@ struct SinopsisView: View {
             .foregroundColor(.white)
             .cornerRadius(20)
         }
-        
+        .navigationTitle(title)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            NavigationLink(destination: CartView()) {
+                Image(systemName: "cart")
+            }
+        }
+        .alert("Boleto agregado al carrito", isPresented: $showAlert) {
+            Button("Aceptar", role: .cancel) {}
+        }
     }
 }
 
 #Preview {
-    SinopsisView(
-        image: .REY_DE_LAS_BROMAS,
-        title: "Avengers: TaqueroDays",
-        anho: "2026",
-        duracion: "190",
-        genero: "Accion"
-        
-    )
+    NavigationStack {
+        SinopsisView(
+            image: .REY_DE_LAS_BROMAS,
+            title: "Avengers: TaqueroDays",
+            anho: "2026",
+            duracion: "190",
+            genero: "Accion"
+        )
+    }
+    .environmentObject(CartModel())
 }

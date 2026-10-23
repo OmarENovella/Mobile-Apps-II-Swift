@@ -8,21 +8,22 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject var cart = CartModel()
+
     var body: some View {
         NavigationStack{
-            
-            NavigationLink(destination: Text("Pantalla 1")){ MovieListView().navigationTitle(
-                Text("Cinepolis"))
-            }
-            /*NavigationLink(destination: Text("Pantalla B")){
-                
-                
-                    
-            }*/
+            MovieListView()
+                .navigationTitle("Cinepolis")
+                .toolbar {
+                    NavigationLink(destination: CartView()) {
+                        Image(systemName: "cart")
+                        Text("\(cart.items.reduce(0) { $0 + $1.cantidad })")
+                    }
+                }
         }
+        .environmentObject(cart)
     }
 }
-
 #Preview {
     ContentView()
 }
